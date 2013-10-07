@@ -29,6 +29,8 @@
 		AC67AF4117E89ABB009A9A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC67AF0E17E89ABA009A9A0B /* Foundation.framework */; };
 		AC67AF4917E89ABB009A9A0B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC67AF4717E89ABB009A9A0B /* InfoPlist.strings */; };
 		AC67AF4C17E89ABB009A9A0B /* Bahamut_KyoMaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC67AF4B17E89ABB009A9A0B /* Bahamut_KyoMaTests.m */; };
+		AC67B09717F35606009A9A0B /* InstalledAppReader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC67B09617F35606009A9A0B /* InstalledAppReader.m */; };
+		AC67B09D17F36B9F009A9A0B /* PUSHEEN.png in Resources */ = {isa = PBXBuildFile; fileRef = AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,9 @@
 		AC67AF4817E89ABB009A9A0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AC67AF4A17E89ABB009A9A0B /* Bahamut_KyoMaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bahamut_KyoMaTests.h; sourceTree = "<group>"; };
 		AC67AF4B17E89ABB009A9A0B /* Bahamut_KyoMaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bahamut_KyoMaTests.m; sourceTree = "<group>"; };
+		AC67B09517F35606009A9A0B /* InstalledAppReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstalledAppReader.h; sourceTree = "<group>"; };
+		AC67B09617F35606009A9A0B /* InstalledAppReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstalledAppReader.m; sourceTree = "<group>"; };
+		AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PUSHEEN.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,9 +138,12 @@
 				AC67AF1B17E89ABA009A9A0B /* AppDelegate.h */,
 				AC67AF1C17E89ABA009A9A0B /* AppDelegate.m */,
 				AC67AF2417E89ABB009A9A0B /* FirstViewController.h */,
+				AC67B09517F35606009A9A0B /* InstalledAppReader.h */,
+				AC67B09617F35606009A9A0B /* InstalledAppReader.m */,
 				AC67AF2517E89ABB009A9A0B /* FirstViewController.m */,
 				AC67AF2717E89ABB009A9A0B /* first.png */,
 				AC67AF2917E89ABB009A9A0B /* first@2x.png */,
+				AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */,
 				AC67AF2B17E89ABB009A9A0B /* SecondViewController.h */,
 				AC67AF2C17E89ABB009A9A0B /* SecondViewController.m */,
 				AC67AF2E17E89ABB009A9A0B /* second.png */,
@@ -190,6 +198,7 @@
 				AC67AF0517E89ABA009A9A0B /* Sources */,
 				AC67AF0617E89ABA009A9A0B /* Frameworks */,
 				AC67AF0717E89ABA009A9A0B /* Resources */,
+				AC0DA3431801944100D07F35 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -261,6 +270,7 @@
 				AC67AF3117E89ABB009A9A0B /* second@2x.png in Resources */,
 				AC67AF3417E89ABB009A9A0B /* FirstViewController.xib in Resources */,
 				AC67AF3717E89ABB009A9A0B /* SecondViewController.xib in Resources */,
+				AC67B09D17F36B9F009A9A0B /* PUSHEEN.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +285,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		AC0DA3431801944100D07F35 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ] || [ \"${PLATFORM_NAME}\" == \"ipados\" ]; then\n/Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
+		};
 		AC67AF3B17E89ABB009A9A0B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,6 +322,7 @@
 				AC67AF1D17E89ABA009A9A0B /* AppDelegate.m in Sources */,
 				AC67AF2617E89ABB009A9A0B /* FirstViewController.m in Sources */,
 				AC67AF2D17E89ABB009A9A0B /* SecondViewController.m in Sources */,
+				AC67B09717F35606009A9A0B /* InstalledAppReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +439,8 @@
 		AC67AF5017E89ABB009A9A0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bahamut_KyoMa/Bahamut_KyoMa-Prefix.pch";
 				INFOPLIST_FILE = "Bahamut_KyoMa/Bahamut_KyoMa-Info.plist";
@@ -426,6 +452,8 @@
 		AC67AF5117E89ABB009A9A0B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bahamut_KyoMa/Bahamut_KyoMa-Prefix.pch";
 				INFOPLIST_FILE = "Bahamut_KyoMa/Bahamut_KyoMa-Info.plist";
@@ -487,6 +515,7 @@
 				AC67AF5117E89ABB009A9A0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AC67AF5217E89ABB009A9A0B /* Build configuration list for PBXNativeTarget "Bahamut_KyoMaTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +524,7 @@
 				AC67AF5417E89ABB009A9A0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
