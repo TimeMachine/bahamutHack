@@ -76,6 +76,7 @@
 		AC67B09517F35606009A9A0B /* InstalledAppReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstalledAppReader.h; sourceTree = "<group>"; };
 		AC67B09617F35606009A9A0B /* InstalledAppReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstalledAppReader.m; sourceTree = "<group>"; };
 		AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PUSHEEN.png; sourceTree = SOURCE_ROOT; };
+		ACB8FB391806984A0034F95D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +125,7 @@
 		AC67AF0B17E89ABA009A9A0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ACB8FB391806984A0034F95D /* libxml2.dylib */,
 				AC67AF0C17E89ABA009A9A0B /* UIKit.framework */,
 				AC67AF0E17E89ABA009A9A0B /* Foundation.framework */,
 				AC67AF1017E89ABA009A9A0B /* CoreGraphics.framework */,
@@ -443,6 +445,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bahamut_KyoMa/Bahamut_KyoMa-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Bahamut_KyoMa/Bahamut_KyoMa-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -456,6 +459,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bahamut_KyoMa/Bahamut_KyoMa-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Bahamut_KyoMa/Bahamut_KyoMa-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
