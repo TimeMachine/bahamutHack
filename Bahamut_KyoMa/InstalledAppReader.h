@@ -13,5 +13,6 @@ static NSString* const installedAppListPath = @"/private/var/mobile/Library/Cach
 
 -(NSDictionary *)installedApp;
 -(NSMutableDictionary *)appDescriptionFromDictionary:(NSDictionary *)dictionary;
+-(NSString *)getSid;
 
 @end

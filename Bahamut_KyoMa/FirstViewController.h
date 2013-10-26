@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "InstalledAppReader.h"
-
+#import "BahamutAPI.h"
 @interface FirstViewController : UIViewController<UITextFieldDelegate,UIPickerViewDelegate,UIActionSheetDelegate,UIPickerViewDataSource>
+{
+    BahamutAPI *api;
+}
 
 @property (strong, nonatomic) IBOutlet UILabel *displaySlider;
 @property (strong, nonatomic) IBOutlet UISlider *slider;

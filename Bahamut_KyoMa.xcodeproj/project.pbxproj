@@ -31,6 +31,9 @@
 		AC67AF4C17E89ABB009A9A0B /* Bahamut_KyoMaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC67AF4B17E89ABB009A9A0B /* Bahamut_KyoMaTests.m */; };
 		AC67B09717F35606009A9A0B /* InstalledAppReader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC67B09617F35606009A9A0B /* InstalledAppReader.m */; };
 		AC67B09D17F36B9F009A9A0B /* PUSHEEN.png in Resources */ = {isa = PBXBuildFile; fileRef = AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */; };
+		AC8FF6CE181AE70500DA909A /* BahamutAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8FF6CD181AE70500DA909A /* BahamutAPI.m */; };
+		AC8FF6D8181AEE0800DA909A /* HolyWarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8FF6D6181AEE0800DA909A /* HolyWarViewController.m */; };
+		AC8FF6D9181AEE0800DA909A /* HolyWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8FF6D7181AEE0800DA909A /* HolyWarViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +79,11 @@
 		AC67B09517F35606009A9A0B /* InstalledAppReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstalledAppReader.h; sourceTree = "<group>"; };
 		AC67B09617F35606009A9A0B /* InstalledAppReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstalledAppReader.m; sourceTree = "<group>"; };
 		AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PUSHEEN.png; sourceTree = SOURCE_ROOT; };
+		AC8FF6CC181AE70500DA909A /* BahamutAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BahamutAPI.h; path = ../BahamutAPI.h; sourceTree = "<group>"; };
+		AC8FF6CD181AE70500DA909A /* BahamutAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BahamutAPI.m; path = ../BahamutAPI.m; sourceTree = "<group>"; };
+		AC8FF6D5181AEE0800DA909A /* HolyWarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HolyWarViewController.h; path = ../HolyWarViewController.h; sourceTree = "<group>"; };
+		AC8FF6D6181AEE0800DA909A /* HolyWarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HolyWarViewController.m; path = ../HolyWarViewController.m; sourceTree = "<group>"; };
+		AC8FF6D7181AEE0800DA909A /* HolyWarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HolyWarViewController.xib; path = ../HolyWarViewController.xib; sourceTree = "<group>"; };
 		ACB8FB391806984A0034F95D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -139,19 +147,24 @@
 			children = (
 				AC67AF1B17E89ABA009A9A0B /* AppDelegate.h */,
 				AC67AF1C17E89ABA009A9A0B /* AppDelegate.m */,
-				AC67AF2417E89ABB009A9A0B /* FirstViewController.h */,
 				AC67B09517F35606009A9A0B /* InstalledAppReader.h */,
 				AC67B09617F35606009A9A0B /* InstalledAppReader.m */,
+				AC67AF2417E89ABB009A9A0B /* FirstViewController.h */,
 				AC67AF2517E89ABB009A9A0B /* FirstViewController.m */,
+				AC67AF3217E89ABB009A9A0B /* FirstViewController.xib */,
+				AC67AF2B17E89ABB009A9A0B /* SecondViewController.h */,
+				AC67AF2C17E89ABB009A9A0B /* SecondViewController.m */,
+				AC67AF3517E89ABB009A9A0B /* SecondViewController.xib */,
+				AC8FF6D5181AEE0800DA909A /* HolyWarViewController.h */,
+				AC8FF6D6181AEE0800DA909A /* HolyWarViewController.m */,
+				AC8FF6D7181AEE0800DA909A /* HolyWarViewController.xib */,
+				AC8FF6CC181AE70500DA909A /* BahamutAPI.h */,
+				AC8FF6CD181AE70500DA909A /* BahamutAPI.m */,
 				AC67AF2717E89ABB009A9A0B /* first.png */,
 				AC67AF2917E89ABB009A9A0B /* first@2x.png */,
 				AC67B09C17F36B9F009A9A0B /* PUSHEEN.png */,
-				AC67AF2B17E89ABB009A9A0B /* SecondViewController.h */,
-				AC67AF2C17E89ABB009A9A0B /* SecondViewController.m */,
 				AC67AF2E17E89ABB009A9A0B /* second.png */,
 				AC67AF3017E89ABB009A9A0B /* second@2x.png */,
-				AC67AF3217E89ABB009A9A0B /* FirstViewController.xib */,
-				AC67AF3517E89ABB009A9A0B /* SecondViewController.xib */,
 				AC67AF1317E89ABA009A9A0B /* Supporting Files */,
 			);
 			path = Bahamut_KyoMa;
@@ -273,6 +286,7 @@
 				AC67AF3417E89ABB009A9A0B /* FirstViewController.xib in Resources */,
 				AC67AF3717E89ABB009A9A0B /* SecondViewController.xib in Resources */,
 				AC67B09D17F36B9F009A9A0B /* PUSHEEN.png in Resources */,
+				AC8FF6D9181AEE0800DA909A /* HolyWarViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +339,8 @@
 				AC67AF2617E89ABB009A9A0B /* FirstViewController.m in Sources */,
 				AC67AF2D17E89ABB009A9A0B /* SecondViewController.m in Sources */,
 				AC67B09717F35606009A9A0B /* InstalledAppReader.m in Sources */,
+				AC8FF6CE181AE70500DA909A /* BahamutAPI.m in Sources */,
+				AC8FF6D8181AEE0800DA909A /* HolyWarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

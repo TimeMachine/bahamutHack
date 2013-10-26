@@ -24,6 +24,7 @@
     if (self) {
         self.title = NSLocalizedString(@"刷任務", @"刷任務");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        api = [[BahamutAPI alloc] init];
     }
     return self;
 }
@@ -69,7 +70,7 @@
 
 -(void)loadMissionPicture:(int)chapter section:(int)section
 {
-    NSMutableURLRequest* jsonQuest = [self setURLRequest];
+    NSMutableURLRequest* jsonQuest = [api setURLRequest];
     NSHTTPURLResponse *urlResponse = nil;
     NSError *error = nil;
     NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest/mission_list/%d",chapter];
@@ -132,7 +133,7 @@
 
 -(void)loadInformation
 {
-    NSMutableURLRequest* jsonQuest = [self setURLRequest];
+    NSMutableURLRequest* jsonQuest = [api setURLRequest];
     NSHTTPURLResponse *urlResponse = nil;
     NSError *error = nil;
     NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/card_list"];
@@ -144,11 +145,7 @@
                                                  returningResponse:&urlResponse
                                                              error:&error];
     NSString *data = [NSString stringWithUTF8String:[responseData bytes]];
-    NSRange range;
-    range = [data rangeOfString:[NSString stringWithFormat:@"持有卡牌一覽("]];
-    data = [data substringFromIndex:range.location+range.length];
-    range = [data rangeOfString:[NSString stringWithFormat:@")"]];
-    cardNumber.text = [data substringToIndex:range.location];
+    cardNumber.text = [api predicateData:data From:@"持有卡牌一覽(" to:@")"];
     
     queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest"];
     [jsonQuest setURL:[NSURL URLWithString:queryURL]];
@@ -159,17 +156,11 @@
     data = [NSString stringWithUTF8String:[responseData bytes]];
     
     NSString* search = [NSString stringWithString:data];
-    range = [search rangeOfString:[NSString stringWithFormat:@"體力:</span> "]];
-    search = [search substringFromIndex:range.location+range.length];
-    range = [search rangeOfString:[NSString stringWithFormat:@"</th>"]];
-    physical_power.text = [[search substringToIndex:range.location] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    physical_power.text = [[api predicateData:search From:@"體力:</span> " to:@"</th>"]  stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     
     search = [NSString stringWithString:data];
-    range = [search rangeOfString:[NSString stringWithFormat:@"經驗值:</span> "]];
-    search = [search substringFromIndex:range.location+range.length];
-    range = [search rangeOfString:[NSString stringWithFormat:@"</th>"]];
-    experience.text = [[search substringToIndex:range.location] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     
+    experience.text = [[api predicateData:search From:@"經驗值:</span> " to:@"</th>"]  stringByReplacingOccurrencesOfString:@"\t" withString:@""];
 }
 
 -(IBAction)showActionSheet
@@ -215,34 +206,10 @@
     inputField.delegate = self;
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"PUSHEEN.png"]];
 	// Do any additional setup after loading the view, typically from a nib.
-    InstalledAppReader * reader = [[InstalledAppReader alloc] init];
-    NSString * path = [[[reader installedApp] objectForKey:@"tw.mobage.h23000047"] objectForKey:@"Path"];
-    path = [[path substringToIndex:[path rangeOfString:@"Bahamut-tw"].location] stringByAppendingString:@"Library/Cookies/Cookies.binarycookies"];
-    NSFileManager *filemgr;
-    NSData *databuffer = nil;
-    filemgr = [NSFileManager defaultManager];
-    if ([filemgr fileExistsAtPath:path] == YES)
-        databuffer = [filemgr contentsAtPath:path];
-    else
-        NSLog (@"File not found");
-    NSString *cookieData = [[NSString alloc] initWithBytes:[databuffer bytes] length:[databuffer length] encoding:NSASCIIStringEncoding];
-    NSRange range = [cookieData rangeOfString:@"sid"];
-    cookieData = [cookieData substringFromIndex:range.location+range.length+3];
-    sid = [cookieData substringToIndex:42];
+    sid  = [[[InstalledAppReader alloc] init] getSid];
+    
     [self loadMissionPicture:2 section:5];
     [self loadInformation];
-}
-
--(NSMutableURLRequest *)setURLRequest
-{
-    NSMutableURLRequest* jsonQuest = [NSMutableURLRequest new];
-    [jsonQuest addValue:@"bahamut-t-i.cygames.jp" forHTTPHeaderField:@"Host"];
-    [jsonQuest addValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
-    [jsonQuest addValue:@"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
-    [jsonQuest addValue:@"zh-tw" forHTTPHeaderField:@"Accept-Language"];
-    [jsonQuest addValue:@"keep-alive" forHTTPHeaderField:@"Connection"];
-    [jsonQuest addValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B143" forHTTPHeaderField:@"User-Agent"];
-    return jsonQuest;
 }
 
 
@@ -253,7 +220,7 @@
         int chapter = [[listItems objectAtIndex:0] integerValue];
         int section = [[listItems objectAtIndex:1] integerValue];
         
-        NSMutableURLRequest* jsonQuest = [self setURLRequest];
+        NSMutableURLRequest* jsonQuest = [api setURLRequest];
         NSHTTPURLResponse *urlResponse = nil;
         NSError *error = nil;
         NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/smart_phone_flash/questConvert/%d/%d",chapter,section];
@@ -266,15 +233,9 @@
                                                      returningResponse:&urlResponse
                                                                  error:&error];
         NSString *data = [NSString stringWithUTF8String:[responseData bytes]];
-        NSRange range;
+        data = [api predicateData:data From:@"flashParam=" to:@"\""];
         
-        range = [data rangeOfString:@"flashParam="];
-        data = [data substringFromIndex:range.location+range.length];
-        range = [data rangeOfString:@"\""];
-        data = [data substringToIndex:range.location];
-        
-        
-        NSMutableURLRequest* flashQuest = [self setURLRequest];
+        NSMutableURLRequest* flashQuest = [api setURLRequest];
         queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest/play/%d/%d?flashParam=%@",chapter,section,data];
         [flashQuest setURL:[NSURL URLWithString:queryURL]];
         [flashQuest setHTTPMethod:@"GET"];

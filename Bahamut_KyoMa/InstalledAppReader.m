@@ -36,4 +36,21 @@
     return nil;
 }
 
+-(NSString *)getSid
+{
+    NSString * path = [[[self installedApp] objectForKey:@"tw.mobage.h23000047"] objectForKey:@"Path"];
+    path = [[path substringToIndex:[path rangeOfString:@"Bahamut-tw"].location] stringByAppendingString:@"Library/Cookies/Cookies.binarycookies"];
+    NSFileManager *filemgr;
+    NSData *databuffer = nil;
+    filemgr = [NSFileManager defaultManager];
+    if ([filemgr fileExistsAtPath:path] == YES)
+        databuffer = [filemgr contentsAtPath:path];
+    else
+        NSLog (@"File not found");
+    NSString *cookieData = [[NSString alloc] initWithBytes:[databuffer bytes] length:[databuffer length] encoding:NSASCIIStringEncoding];
+    NSRange range = [cookieData rangeOfString:@"sid"];
+    cookieData = [cookieData substringFromIndex:range.location+range.length+3];
+    return [cookieData substringToIndex:42];
+}
+
 @end
