@@ -10,6 +10,9 @@
 #import "InstalledAppReader.h"
 #import "BahamutAPI.h"
 @interface HolyWarViewController : UIViewController
+{
+    NSTimer* counter;
+}
 
 @property (strong, nonatomic) IBOutlet UISwitch *autoRefresh;
 @property (strong, nonatomic) NSString *sid;
@@ -35,5 +38,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *ListFivethPosition;
 
 -(IBAction)updataSliderValue:(id)sender;
+-(IBAction)switchValueChange:(id)sender;
+-(IBAction)refreshPage;
 
 @end

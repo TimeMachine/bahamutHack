@@ -11,6 +11,7 @@
 #import "BahamutAPI.h"
 @interface FirstViewController : UIViewController<UITextFieldDelegate,UIPickerViewDelegate,UIActionSheetDelegate,UIPickerViewDataSource>
 {
+    NSOperationQueue *operationQueue;
     BahamutAPI *api;
 }
 

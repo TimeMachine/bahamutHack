@@ -25,6 +25,8 @@
         self.title = NSLocalizedString(@"刷任務", @"刷任務");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
         api = [[BahamutAPI alloc] init];
+        NSOperationQueue *aQ = [[NSOperationQueue alloc] init];
+        [aQ setMaxConcurrentOperationCount:5];
     }
     return self;
 }

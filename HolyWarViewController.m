@@ -7,7 +7,8 @@
 //
 
 #import "HolyWarViewController.h"
-
+#define refreshing @"Refreshing"
+#define refresh @"Refresh"
 @interface HolyWarViewController ()
 
 @end
@@ -43,6 +44,46 @@
 -(IBAction)updataSliderValue:(id)sender
 {
     displayPageSlider.text = [NSString stringWithFormat:@"%d",(int)pageSlider.value];
+    [self refreshPage];
+}
+
+-(IBAction)switchValueChange:(id)sender
+{
+    if ([counter isValid]) {
+        [counter invalidate];
+        [refreshButton setTitle:refresh forState:UIControlStateNormal];
+    }
+    else
+    {
+        [refreshButton setTitle:@"20" forState:UIControlStateNormal];
+        counter = [NSTimer scheduledTimerWithTimeInterval:1.0f  target:self selector:@selector(runLoopForRefresh:) userInfo:nil repeats:YES];
+    }
+}
+
+-(void)runLoopForRefresh:(NSTimer *) sender
+{
+    if (![refreshButton.titleLabel.text isEqualToString:refreshing]) {
+        int count = [refreshButton.titleLabel.text integerValue];
+        count--;
+        if (count==0) {
+            [self refreshPage];
+            return;
+        }
+        [refreshButton setTitle:[NSString stringWithFormat:@"%d",count] forState:UIControlStateNormal];        
+    }
+    
+}
+
+-(IBAction)refreshPage
+{
+    [refreshButton setTitle:refreshing forState:UIControlStateNormal];
+    [self catchInformation];
+
+}
+
+-(void)catchInformation
+{
+    
 }
 
 @end
