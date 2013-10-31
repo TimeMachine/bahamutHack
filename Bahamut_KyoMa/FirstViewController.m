@@ -7,10 +7,12 @@
 //
 
 #import "FirstViewController.h"
+#define prepareRun @"Run!"
 @interface FirstViewController ()
 {
     int pickerSection;
     UIPickerView *SpeakPickerView ;
+    bool runState;
 }
 
 @end
@@ -25,8 +27,9 @@
         self.title = NSLocalizedString(@"刷任務", @"刷任務");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
         api = [[BahamutAPI alloc] init];
-        NSOperationQueue *aQ = [[NSOperationQueue alloc] init];
-        [aQ setMaxConcurrentOperationCount:5];
+        operationQueue = [[NSOperationQueue alloc] init];
+        [operationQueue setMaxConcurrentOperationCount:5];
+        
     }
     return self;
 }
@@ -73,18 +76,25 @@
 -(void)loadMissionPicture:(int)chapter section:(int)section
 {
     NSMutableURLRequest* jsonQuest = [api setURLRequest];
-    NSHTTPURLResponse *urlResponse = nil;
-    NSError *error = nil;
+
     NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest/mission_list/%d",chapter];
     [jsonQuest setURL:[NSURL URLWithString:queryURL]];
     [jsonQuest setHTTPMethod:@"GET"];
     [jsonQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
     [jsonQuest addValue:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest/quest_list" forHTTPHeaderField:@"Referer"];
     
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
-                                                 returningResponse:&urlResponse
-                                                             error:&error];
-    NSString *data = [NSString stringWithUTF8String:[responseData bytes]];
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+                                        initWithTarget:self selector:@selector(getMissionList:) object:@[jsonQuest,[NSNumber numberWithInt:chapter],[NSNumber numberWithInt:section]]];
+    [operationQueue addOperation:operation];
+}
+
+-(void)getMissionList:(id)dataArray
+{
+    NSArray* array = (NSArray *) dataArray;
+    NSMutableURLRequest* jsonQuest = [array objectAtIndex:0];
+    int chapter = [[array objectAtIndex:1] integerValue];
+    int section = [[array objectAtIndex:2] integerValue];
+    NSString *data = [api sendPacket:jsonQuest];
     NSRange range;
     range = [data rangeOfString:[NSString stringWithFormat:@"%d-%d",chapter,section]];
     data = [data substringFromIndex:range.location+range.length];
@@ -98,71 +108,106 @@
         
         if ([[data substringToIndex:2] isEqualToString:@"ui"]) {
             range = [data rangeOfString:@"\" width=\"80px\""];
-
+            
         } else {
             range = [data rangeOfString:@"' width=\"80px\""];
-
+            
         }
-        queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/%@",[data substringToIndex:range.location]];
+        NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/%@",[data substringToIndex:range.location]];
+        NSMutableURLRequest* jsonQuest = [api setURLRequest];
+        [jsonQuest setHTTPMethod:@"GET"];
+        [jsonQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
         [jsonQuest setURL:[NSURL URLWithString:queryURL]];
         [jsonQuest setValue: [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest/mission_list/%d",chapter] forHTTPHeaderField:@"Referer"];
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
-                                                     returningResponse:&urlResponse
-                                                                 error:&error];
-        UIImage *image=[UIImage imageWithData:responseData];
-        CGSize imgSize = missionRevenge1.frame.size;
-        
-        UIGraphicsBeginImageContext( imgSize );
-        [image drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
-        UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        switch (i) {
-            case 0:
-                missionRevenge1.backgroundColor = [UIColor colorWithPatternImage:newImage];
-                break;
-            case 1:
-                missionRevenge2.backgroundColor = [UIColor colorWithPatternImage:newImage];
-                break;
-            case 2:
-                missionRevenge3.backgroundColor = [UIColor colorWithPatternImage:newImage];
-                break;
+        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+                                            initWithTarget:self selector:@selector(getMissinImage:) object:@[jsonQuest,[NSNumber numberWithInt:i]]];
+        [operationQueue addOperation:operation];
         }
-    }
-    
-    
+}
 
+-(void)getMissinImage:(id)arrayData
+{
+    NSArray* array = (NSArray *) arrayData;
+    NSMutableURLRequest* jsonQuest = [array objectAtIndex:0];
+    NSHTTPURLResponse *urlResponse = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
+                                                 returningResponse:&urlResponse
+                                                             error:nil];
+    UIImage *image=[UIImage imageWithData:responseData];
+    CGSize imgSize = missionRevenge1.frame.size;
+    
+    UIGraphicsBeginImageContext( imgSize );
+    [image drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    if (![NSThread isMainThread])
+        [self performSelectorOnMainThread:@selector(processImage:) withObject:@[newImage,[array objectAtIndex:1]] waitUntilDone:YES];
+}
+
+-(void)processImage:(id)array
+{
+    UIImage* newImage = [array objectAtIndex:0];
+    
+    switch ([[array objectAtIndex:1] integerValue]) {
+            
+        case 0:
+            missionRevenge1.backgroundColor = [UIColor colorWithPatternImage:newImage];
+            break;
+        case 1:
+            missionRevenge2.backgroundColor = [UIColor colorWithPatternImage:newImage];
+            break;
+        case 2:
+            missionRevenge3.backgroundColor = [UIColor colorWithPatternImage:newImage];
+            break;
+    }
 }
 
 -(void)loadInformation
 {
+    NSInvocationOperation *operationCard = [[NSInvocationOperation alloc]
+                                        initWithTarget:self selector:@selector(getCardInformation) object:nil];
+    [operationQueue addOperation:operationCard];
+    NSInvocationOperation *operationAbility = [[NSInvocationOperation alloc]
+                                            initWithTarget:self selector:@selector(getAbilityInformation) object:nil];
+    [operationQueue addOperation:operationAbility];
+}
+
+-(void)getCardInformation
+{
     NSMutableURLRequest* jsonQuest = [api setURLRequest];
-    NSHTTPURLResponse *urlResponse = nil;
-    NSError *error = nil;
     NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/card_list"];
     [jsonQuest setURL:[NSURL URLWithString:queryURL]];
     [jsonQuest setHTTPMethod:@"GET"];
     [jsonQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
+    NSString *data = [api sendPacket:jsonQuest];
     
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
-                                                 returningResponse:&urlResponse
-                                                             error:&error];
-    NSString *data = [NSString stringWithUTF8String:[responseData bytes]];
-    cardNumber.text = [api predicateData:data From:@"持有卡牌一覽(" to:@")"];
-    
-    queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest"];
+    if (![NSThread isMainThread])
+        [self performSelectorOnMainThread:@selector(processCardInformation:) withObject:data waitUntilDone:YES];
+}
+
+-(void)processCardInformation:(id)data
+{
+    cardNumber.text = [api predicateData:(NSString *)data From:@"持有卡牌一覽(" to:@")"];
+}
+
+-(void)getAbilityInformation
+{
+    NSMutableURLRequest* jsonQuest = [api setURLRequest];
+    NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest"];
     [jsonQuest setURL:[NSURL URLWithString:queryURL]];
-    
-    responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
-                                                 returningResponse:&urlResponse
-                                                             error:&error];
-    data = [NSString stringWithUTF8String:[responseData bytes]];
+    [jsonQuest setHTTPMethod:@"GET"];
+    [jsonQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
+    NSString* search = [NSString stringWithString:[api sendPacket:jsonQuest]];
+    if (![NSThread isMainThread])
+        [self performSelectorOnMainThread:@selector(processAbilityInformation:) withObject:search waitUntilDone:YES];
+}
+
+-(void)processAbilityInformation:(id)data
+{
     
     NSString* search = [NSString stringWithString:data];
-    physical_power.text = [[api predicateData:search From:@"體力:</span> " to:@"</th>"]  stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-    
-    search = [NSString stringWithString:data];
-    
-    experience.text = [[api predicateData:search From:@"經驗值:</span> " to:@"</th>"]  stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    physical_power.text = [[api predicateData:data From:@"體力:</span> " to:@"</th>"]  stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    experience.text = [[api predicateData:(NSString *)search From:@"經驗值:</span> " to:@"</th>"]  stringByReplacingOccurrencesOfString:@"\t" withString:@""];
 }
 
 -(IBAction)showActionSheet
@@ -217,24 +262,38 @@
 
 -(IBAction)run:(id)sender
 {
-    while ([displaySlider.text intValue]) {
+    if (!runState) {
+        [run setTitle:@"Stop" forState:UIControlStateNormal];
+        runState = YES;
+        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+                                            initWithTarget:self selector:@selector(getCard) object:nil];
+        [operationQueue addOperation:operation];
+    }
+    else
+    {
+        [run setTitle:prepareRun forState:UIControlStateNormal];
+        runState = NO;
+    }
+    
+}
+
+-(void)getCard
+{
+    while ([displaySlider.text intValue]&&runState) {
+        
         NSArray *listItems = [chapterLabel.text componentsSeparatedByString:@"-"];
         int chapter = [[listItems objectAtIndex:0] integerValue];
         int section = [[listItems objectAtIndex:1] integerValue];
         
         NSMutableURLRequest* jsonQuest = [api setURLRequest];
-        NSHTTPURLResponse *urlResponse = nil;
-        NSError *error = nil;
+        
         NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/smart_phone_flash/questConvert/%d/%d",chapter,section];
         [jsonQuest setURL:[NSURL URLWithString:queryURL]];
         [jsonQuest setHTTPMethod:@"POST"];
         [jsonQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
         [jsonQuest addValue:[NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/quest/mission_list/%d",chapter] forHTTPHeaderField:@"Referer"];
         
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
-                                                     returningResponse:&urlResponse
-                                                                 error:&error];
-        NSString *data = [NSString stringWithUTF8String:[responseData bytes]];
+        NSString *data = [api sendPacket:jsonQuest];
         data = [api predicateData:data From:@"flashParam=" to:@"\""];
         
         NSMutableURLRequest* flashQuest = [api setURLRequest];
@@ -243,19 +302,27 @@
         [flashQuest setHTTPMethod:@"GET"];
         [flashQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
         [flashQuest addValue:[NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/smart_phone_flash/questConvert/%d/%d",chapter,section] forHTTPHeaderField:@"Referer"];
-        
-        responseData = [NSURLConnection sendSynchronousRequest:flashQuest
-                                                     returningResponse:&urlResponse
-                                                                 error:&error];
+        [api sendPacket:flashQuest];
+        if (![NSThread isMainThread])
+            [self performSelectorOnMainThread:@selector(processGetCard) withObject:nil waitUntilDone:YES];
 
-        
-        slider.value--;
-        displaySlider.text = [NSString stringWithFormat:@"%d",(int)slider.value];
-        [self loadInformation];
-        [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
     }
+    if (![NSThread isMainThread])
+        [self performSelectorOnMainThread:@selector(processGetCardFinish) withObject:nil waitUntilDone:YES];
 }
 
+-(void)processGetCard
+{
+    slider.value--;
+    displaySlider.text = [NSString stringWithFormat:@"%d",(int)slider.value];
+    [self loadInformation];
+}
+
+-(void)processGetCardFinish
+{
+    runState = NO;
+    [run setTitle:prepareRun forState:UIControlStateNormal];
+}
 
 #pragma mark -
 #pragma mark - SpeakPickerView methods

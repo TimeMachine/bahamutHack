@@ -12,6 +12,8 @@
 @interface HolyWarViewController : UIViewController
 {
     NSTimer* counter;
+    NSOperationQueue *operationQueue;
+    BahamutAPI *api;
 }
 
 @property (strong, nonatomic) IBOutlet UISwitch *autoRefresh;
@@ -40,5 +42,7 @@
 -(IBAction)updataSliderValue:(id)sender;
 -(IBAction)switchValueChange:(id)sender;
 -(IBAction)refreshPage;
+-(IBAction)attack:(id)sender;
+- (IBAction)segmentedControlIndexChanged:(id)sender;
 
 @end
