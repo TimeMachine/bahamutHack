@@ -26,18 +26,29 @@
 @property (strong, nonatomic) IBOutlet UILabel *ownGroupScore;
 @property (strong, nonatomic) IBOutlet UILabel *enemyGroupScore;
 @property (strong, nonatomic) IBOutlet UILabel *selfScore;
+@property (strong, nonatomic) IBOutlet UILabel *holypowderQuantity;
 
 
 @property (strong, nonatomic) IBOutlet UILabel *ListFirstName;
 @property (strong, nonatomic) IBOutlet UILabel *ListFirstPosition;
+@property (strong, nonatomic) IBOutlet UILabel *ListFirstDenfend;
+@property (strong, nonatomic) IBOutlet UILabel *ListFirstPoint;
 @property (strong, nonatomic) IBOutlet UILabel *ListSecondName;
 @property (strong, nonatomic) IBOutlet UILabel *ListSecondPosition;
+@property (strong, nonatomic) IBOutlet UILabel *ListSecondDenfend;
+@property (strong, nonatomic) IBOutlet UILabel *ListSecondPoint;
 @property (strong, nonatomic) IBOutlet UILabel *ListThirdName;
 @property (strong, nonatomic) IBOutlet UILabel *ListThirdPosition;
+@property (strong, nonatomic) IBOutlet UILabel *ListThirdDenfend;
+@property (strong, nonatomic) IBOutlet UILabel *ListThirdPoint;
 @property (strong, nonatomic) IBOutlet UILabel *ListFourthName;
 @property (strong, nonatomic) IBOutlet UILabel *ListFourthPosition;
+@property (strong, nonatomic) IBOutlet UILabel *ListFourthDenfend;
+@property (strong, nonatomic) IBOutlet UILabel *ListFourthPoint;
 @property (strong, nonatomic) IBOutlet UILabel *ListFivethName;
 @property (strong, nonatomic) IBOutlet UILabel *ListFivethPosition;
+@property (strong, nonatomic) IBOutlet UILabel *ListFivethDenfend;
+@property (strong, nonatomic) IBOutlet UILabel *ListFivethPoint;
 
 -(IBAction)updataSliderValue:(id)sender;
 -(IBAction)switchValueChange:(id)sender;

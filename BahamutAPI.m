@@ -20,13 +20,24 @@
 
 
 -(NSString *)predicateData:(NSString *)data From:(NSString *)former to:(NSString *)latter{
-    
+
     NSRange range;
     range = [data rangeOfString:former];
     data = [data substringFromIndex:range.location+range.length];
     range = [data rangeOfString:latter];
     return [data substringToIndex:range.location];
 }
+
+-(NSString *)predicateFromTheBackToFrontData:(NSString *)data From:(NSString *)former to:(NSString *)latter{
+    
+    NSRange range;
+    range = [data rangeOfString:latter];
+    data = [data substringToIndex:range.location];
+    range = [data rangeOfString:former];
+    data = [data substringFromIndex:range.location+range.length];
+    return data;
+}
+
 
 -(NSMutableURLRequest *)setURLRequest
 {
@@ -47,16 +58,16 @@
     NSHTTPURLResponse *urlResponse = nil;
     NSString * data;
     NSRange range;
-    do {
+   // do {
         responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
                                              returningResponse:&urlResponse
                                                          error:nil];
         data = [NSString stringWithUTF8String:[responseData bytes]];
-        range = [data rangeOfString:@"網路管制"];
+        /*range = [data rangeOfString:@"網路管制"];
         if (range.location != NSNotFound) {
             [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
         }
-    } while (range.location != NSNotFound);
+    } while (range.location != NSNotFound);*/
     return data;
 }
 @end

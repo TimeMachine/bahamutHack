@@ -22,9 +22,10 @@
 @end
 
 @implementation HolyWarViewController
-@synthesize sid,selfScore,autoRefresh,refreshButton;
+@synthesize sid,selfScore,autoRefresh,refreshButton,holypowderQuantity;
 @synthesize pageSlider,displayPageSlider,ownGroupScore,enemyGroupScore,buttonOfAutomaticity;
 @synthesize ListFirstName,ListFirstPosition,ListFivethName,ListFivethPosition,ListFourthName,ListFourthPosition,ListSecondName,ListSecondPosition,ListThirdName,ListThirdPosition;
+@synthesize ListFirstDenfend,ListFirstPoint,ListFivethDenfend,ListFivethPoint,ListFourthDenfend,ListFourthPoint,ListSecondDenfend,ListSecondPoint,ListThirdDenfend,ListThirdPoint;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -35,7 +36,6 @@
         operationQueue = [[NSOperationQueue alloc] init];
         [operationQueue setMaxConcurrentOperationCount:5];
         q = dispatch_queue_create("foo", NULL);
-        myDeckId = @"464655";
         enemyID = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -182,8 +182,20 @@
         }
         else
         {
-            detail = [api predicateData:[api predicateData:section From:@"<span style=\"padding:1px;" to:@"<img"] From:@";\">" to:@"</span>"];
-            [enemyID setValue:[api predicateData:section From:@"deck_id=&other_id=" to:@"\">"] forKey:[NSString stringWithFormat:@"%d",i]];
+            range = [section rangeOfString:@"防禦隊長"];
+            if (range.location != NSNotFound) {
+                detail = @"防禦隊長";
+                [enemyID setValue:@"防禦隊長" forKey:[NSString stringWithFormat:@"%d",i]];
+            }
+            else
+            {
+                detail = [api predicateData:[api predicateData:section From:@"<span style=\"padding:1px;" to:@"<img"] From:@";\">" to:@"</span>"];
+                NSString * thisSectionEnemyID =[api predicateData:section From:@"deck_id=&other_id=" to:@"\">"];
+                [enemyID setValue:thisSectionEnemyID forKey:[NSString stringWithFormat:@"%d",i]];
+                NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+                                                    initWithTarget:self selector:@selector(getAttackConfirmForId:) object:@[thisSectionEnemyID,[NSNumber numberWithInt:i]]];
+                [operationQueue addOperation:operation];
+            }
         }
         switch (i) {
             case 1:
@@ -233,30 +245,85 @@
 -(IBAction)attack:(id)sender
 {
     UIButton* button = (UIButton*)sender;
-    if (![[enemyID objectForKey:[NSString stringWithFormat:@"%d",button.tag]] isEqualToString:@"已100敗"] ) {
+    if (![[enemyID objectForKey:[NSString stringWithFormat:@"%d",button.tag]] isEqualToString:@"已100敗"]&&![[enemyID objectForKey:[NSString stringWithFormat:@"%d",button.tag]] isEqualToString:@"防禦隊長"]  ) {
         NSInvocationOperation *operation = [[NSInvocationOperation alloc]
                                             initWithTarget:self selector:@selector(postAttackRequest:) object:[enemyID objectForKey:[NSString stringWithFormat:@"%d",button.tag]]];
         [operationQueue addOperation:operation];
     }
 }
 
--(NSString *)getAttackConfirmForId:(NSString *)attackId
+-(void)getAttackConfirmForId:(id)data
 {
+    NSString* attackId = [data objectAtIndex:0];
     NSMutableURLRequest* confirmQuest = [api setURLRequest];
     NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/holywar/battle_vs_other_confirm?deck_id=&other_id=%@",attackId];
     [confirmQuest setURL:[NSURL URLWithString:queryURL]];
     [confirmQuest setHTTPMethod:@"GET"];
     [confirmQuest setValue:[NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/holywar/search_battle"] forHTTPHeaderField:@"Referer"];
     [confirmQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
-    return [api sendPacket:confirmQuest];
+    NSString* response = [NSString stringWithString:[api sendPacket:confirmQuest]];
+    
+    if ([[data objectAtIndex:1] intValue]) {
+        if (![NSThread isMainThread])
+            [self performSelectorOnMainThread:@selector(processAttackConfirm:) withObject:@[response,[data objectAtIndex:1]] waitUntilDone:YES];
+    }
 }
+
+-(void)processAttackConfirm:(id)data
+{
+    NSString* response = [data objectAtIndex:0];
+    int i = [[data objectAtIndex:1] intValue];
+    NSString* defend = [api predicateData:response From:@"防戰力:</span>" to:@"<br />"];
+    NSString* point = [api predicateData:response From:@"預計獲得聖戰點數:</span>" to:@"<br />"];
+    if (![point intValue]) {
+        point = [api predicateData:response From:@"預計獲得聖戰點數:</span><span style=\"font-size:medium;\">" to:@"</span>"];
+    }
+    NSString* holyPowderSection = [api predicateData:response From:@"<tr class=\"_target_stock\">" to:@"</tr>"];
+    NSString* holyPowder = nil;
+    NSRange range;
+   do {
+        holyPowder = [api predicateData:holyPowderSection From:@"<td><div style=\"color:#FFBF00;\">" to:@"個</div></td>"];
+        range = [holyPowderSection rangeOfString:@"<td><div style=\"color:#FFBF00;\">"];
+        holyPowderSection = [holyPowderSection substringFromIndex:range.location-1];
+        range = [holyPowderSection rangeOfString:@"<td><div style=\"color:#FFBF00;\">"];
+    } while (range.location != NSNotFound);
+    holypowderQuantity.text = holyPowder;
+    myDeckId = [api predicateFromTheBackToFrontData:response From:@"<option value=\"" to:@"\" selected"];
+    switch (i) {
+        case 1:
+            ListFirstDenfend.text = defend;
+            ListFirstPoint.text = point;
+            break;
+        case 2:
+            ListSecondDenfend.text = defend;
+            ListSecondPoint.text = point;
+            break;
+        case 3:
+            ListThirdDenfend.text = defend;
+            ListThirdPoint.text = point;
+            break;
+        case 4:
+            ListFourthDenfend.text = defend;
+            ListFourthPoint.text = point;
+            break;
+        case 5:
+            ListFivethDenfend.text = defend;
+            ListFivethPoint.text = point;
+            break;
+        default:
+            break;
+    }
+}
+
 
 -(void)postAttackRequest:(id)data
 {
-    NSRange range;
+    int localHolyPowderType = holyPowderType;
+    NSRange range,range1;
     NSString* attackId = (NSString *)data;
+    NSString* response;
     do {
-        [self getAttackConfirmForId:attackId];
+        [self getAttackConfirmForId:@[attackId,[NSNumber numberWithInt:0]]];
         
         NSMutableURLRequest* jsonQuest = [api setURLRequest];
         NSString * queryURL = [NSString stringWithFormat:@"http://bahamut-t-i.cygames.jp/bahamut_t/holywar/battle_vs_other_check"];
@@ -266,11 +333,11 @@
         [jsonQuest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [jsonQuest addValue:[NSString stringWithFormat:@"sid=%@",sid] forHTTPHeaderField:@"Cookie"];
         [jsonQuest addValue:@" http://bahamut-t-i.cygames.jp" forHTTPHeaderField:@"Origin"];
-        if (holyPowderType == 1)
+        if (localHolyPowderType == 1)
         {
                     [jsonQuest setHTTPBody:[[NSString stringWithFormat:@"other_id=%@&deck_id=%@&pawder=1&pawder_id=18",attackId,myDeckId] dataUsingEncoding:NSUTF8StringEncoding]];
         }
-        else if (holyPowderType == 2)
+        else if (localHolyPowderType == 2)
         {
             [jsonQuest setHTTPBody:[[NSString stringWithFormat:@"other_id=%@&deck_id=%@&pawder=1&pawder_id=2",attackId,myDeckId] dataUsingEncoding:NSUTF8StringEncoding]];
         }
@@ -278,11 +345,20 @@
         {
             [jsonQuest setHTTPBody:[[NSString stringWithFormat:@"other_id=%@&deck_id=%@",attackId,myDeckId] dataUsingEncoding:NSUTF8StringEncoding]];
         }
-        [jsonQuest setHTTPBody:[[NSString stringWithFormat:@"other_id=%@&deck_id=%@&pawder=1&pawder_id=18",attackId,myDeckId] dataUsingEncoding:NSUTF8StringEncoding]];
-        NSString* response = [NSString stringWithString:[api sendPacket:jsonQuest]];
+        response = [api sendPacket:jsonQuest];
         range = [response rangeOfString:@"抱歉，發生錯誤。"];
+        range1 = [response rangeOfString:@"勇者之心"];
         
-    } while (range.location == NSNotFound);
+        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+                                            initWithTarget:self selector:@selector(getInformation) object:nil];
+        [operationQueue addOperation:operation];
+        
+    } while (response==nil||(range.location == NSNotFound && range1.location == NSNotFound));
+    
+    NSInvocationOperation *operation2 = [[NSInvocationOperation alloc]
+                                         initWithTarget:self selector:@selector(getBattleList) object:nil];
+    [operationQueue addOperation:operation2];
+    
 }
 
 - (IBAction)segmentedControlIndexChanged:(id)sender {

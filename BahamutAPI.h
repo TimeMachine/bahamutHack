@@ -14,4 +14,5 @@
 -(NSString *)predicateData:(NSString *)data From:(NSString *)former to:(NSString *)latter;
 -(NSMutableURLRequest *)setURLRequest;
 -(NSString *)sendPacket:(NSMutableURLRequest *)jsonQuest;
+-(NSString *)predicateFromTheBackToFrontData:(NSString *)data From:(NSString *)former to:(NSString *)latter;
 @end
