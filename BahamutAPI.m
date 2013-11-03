@@ -58,16 +58,16 @@
     NSHTTPURLResponse *urlResponse = nil;
     NSString * data;
     NSRange range;
-   // do {
+   do {
         responseData = [NSURLConnection sendSynchronousRequest:jsonQuest
                                              returningResponse:&urlResponse
                                                          error:nil];
         data = [NSString stringWithUTF8String:[responseData bytes]];
-        /*range = [data rangeOfString:@"網路管制"];
-        if (range.location != NSNotFound) {
+        range = [data rangeOfString:@"網路管制"];
+        if (data != nil &&range.location != NSNotFound) {
             [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
         }
-    } while (range.location != NSNotFound);*/
+    } while (data != nil && range.location != NSNotFound);
     return data;
 }
 @end

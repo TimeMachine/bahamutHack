@@ -284,11 +284,16 @@
    do {
         holyPowder = [api predicateData:holyPowderSection From:@"<td><div style=\"color:#FFBF00;\">" to:@"個</div></td>"];
         range = [holyPowderSection rangeOfString:@"<td><div style=\"color:#FFBF00;\">"];
-        holyPowderSection = [holyPowderSection substringFromIndex:range.location-1];
+        holyPowderSection = [holyPowderSection substringFromIndex:range.location+range.length-1];
         range = [holyPowderSection rangeOfString:@"<td><div style=\"color:#FFBF00;\">"];
     } while (range.location != NSNotFound);
     holypowderQuantity.text = holyPowder;
     myDeckId = [api predicateFromTheBackToFrontData:response From:@"<option value=\"" to:@"\" selected"];
+    range = [myDeckId rangeOfString:@"<option value=\""];
+    while (range.location != NSNotFound) {
+        myDeckId = [myDeckId substringFromIndex:range.location+range.length];
+        range = [myDeckId rangeOfString:@"<option value=\""];
+    }
     switch (i) {
         case 1:
             ListFirstDenfend.text = defend;
@@ -373,6 +378,11 @@
             holyPowderType = 2;
             break;
     }
+}
+
+-(IBAction)automation:(id)sender{/*
+    NSString* response = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Test" ofType:@"text"] encoding:NSUTF8StringEncoding error:nil];
+    [self processAttackConfirm:@[response,@"1"]];*/
 }
 
 @end

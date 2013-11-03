@@ -34,6 +34,7 @@
 		AC8FF6CE181AE70500DA909A /* BahamutAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8FF6CD181AE70500DA909A /* BahamutAPI.m */; };
 		AC8FF6D8181AEE0800DA909A /* HolyWarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8FF6D6181AEE0800DA909A /* HolyWarViewController.m */; };
 		AC8FF6D9181AEE0800DA909A /* HolyWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8FF6D7181AEE0800DA909A /* HolyWarViewController.xib */; };
+		C70286271825F62800EF8812 /* Test.text in Resources */ = {isa = PBXBuildFile; fileRef = C70286261825F62800EF8812 /* Test.text */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		AC8FF6D6181AEE0800DA909A /* HolyWarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HolyWarViewController.m; path = ../HolyWarViewController.m; sourceTree = "<group>"; };
 		AC8FF6D7181AEE0800DA909A /* HolyWarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HolyWarViewController.xib; path = ../HolyWarViewController.xib; sourceTree = "<group>"; };
 		ACB8FB391806984A0034F95D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		C70286261825F62800EF8812 /* Test.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Test.text; path = ../Test.text; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				AC8FF6D5181AEE0800DA909A /* HolyWarViewController.h */,
 				AC8FF6D6181AEE0800DA909A /* HolyWarViewController.m */,
 				AC8FF6D7181AEE0800DA909A /* HolyWarViewController.xib */,
+				C70286261825F62800EF8812 /* Test.text */,
 				AC8FF6CC181AE70500DA909A /* BahamutAPI.h */,
 				AC8FF6CD181AE70500DA909A /* BahamutAPI.m */,
 				AC67AF2717E89ABB009A9A0B /* first.png */,
@@ -287,6 +290,7 @@
 				AC67AF3717E89ABB009A9A0B /* SecondViewController.xib in Resources */,
 				AC67B09D17F36B9F009A9A0B /* PUSHEEN.png in Resources */,
 				AC8FF6D9181AEE0800DA909A /* HolyWarViewController.xib in Resources */,
+				C70286271825F62800EF8812 /* Test.text in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +467,7 @@
 				GCC_PREFIX_HEADER = "Bahamut_KyoMa/Bahamut_KyoMa-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Bahamut_KyoMa/Bahamut_KyoMa-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -477,6 +482,7 @@
 				GCC_PREFIX_HEADER = "Bahamut_KyoMa/Bahamut_KyoMa-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Bahamut_KyoMa/Bahamut_KyoMa-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

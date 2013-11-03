@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tw" xml:lang="tw">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=10">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>巴哈姆特之怒</title>
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/css/game/common_v2.css?v=2001" media="all">
+<link href="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.selectbox/css/jquery.selectbox.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/css/game/global_v5.css?v=10" media="all">
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/css/game/top.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/css/game/cypopup.css" media="all">
+
+<script type="text/javascript" src = "http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.scrollable.min.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.flicksimple.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/s3Slider.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/moment_1.1.1.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.selectbox/js/jquery.selectbox-0.1.3.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.anchor.js"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery-blink.js?v=1"></script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jQueryRotateCompressed.2.1.js"></script>
+
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.alerts-1.1/jquery.alerts.js"></script>
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.alerts-1.1/jquery.alerts.css" media="all">
+
+<script src="http://bahamut-t-i.cygames.jp/bahamut_t/js/jquery.moreatag.js" type="text/javascript"></script>
+<script src="http://bahamut-t-i.cygames.jp/bahamut_t/js/cyplugins/cyplugins_v3.js" type="text/javascript"></script>
+<script type="text/javascript">
+var bahamut = {
+    timezone : "Asia/Brunei"
+};
+</script>
+
+<script type="text/javascript" src = "http://bahamut-t-i.cygames.jp/bahamut_t/js/common.js?v=5"></script>
+<script type="text/javascript">
+	addEventListener("DOMContentLoaded", function() { setTimeout(hideURLbar, 100); }, false) ;
+	function hideURLbar() {
+	if (window.pageYOffset === 0)
+		window.scrollTo(0,1);
+	}
+</script>
+
+<script>var se_flg = 0;var bgm_flg = 0;</script></head>
+<body>
+<div id="top" class="page_container">
+
+
+<script type="text/javascript">
+	jQuery.top_menu = {
+		href:"http://bahamut-t-i.cygames.jp/bahamut_t/error/ng_agent_access",
+		debug:false	};
+</script>
+<script src="http://bahamut-t-i.cygames.jp/bahamut_t/js/top_menu_2.js" type="text/javascript"></script>
+
+	<div class = "toppadding">&nbsp;</div>
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/css/game/holywar.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://bahamut-t-i.cygames.jp/bahamut_t/css/cyplugins/likeapp/likeapp.css" media="all">
+<script src="http://bahamut-t-i.cygames.jp/bahamut_t/js/holywar.js" type="text/javascript"></script>
+<script src="http://bahamut-t-i.cygames.jp/bahamut_t/js/event_common.js" type="text/javascript"></script>
+<style>
+/*------------------------------------------
+	共通: 3連ボタンで両端角丸
+------------------------------------------*/
+.cmnBtn3.bordered {
+	position: relative;
+	display: inline-block;
+	height:30px;
+	border:solid 1px #333333;
+	border-radius: 8px;
+	background: -webkit-gradient(linear, center top, center bottom, from(#74716E), color-stop(0.51, #4E4C4A),color-stop(0.5, #353433), to(#343332));
+	color: #ffffff;
+	text-decoration: none;
+	text-shadow: 0px 0px 2px #000000,0px 0px 2px #000000,0px 0px 2px #000000,0px 0px 2px #000000,0px 0px 2px #000000;
+	font-size: 14px;
+	line-height: 28px;
+}
+.cmnBtn3.bordered.center {
+	margin-bottom: 5px;
+}
+.cmnBtn3.bordered.left {
+	float:left;
+	margin-bottom: 5px;
+	margin-left: 6px;
+}
+.cmnBtn3.bordered.right {
+	float:right;
+	margin-right: 6px;
+	margin-bottom: 5px;
+}
+.cmnBtn3.bordered:hover,
+.cmnBtn3.bordered:active {
+	border-top: 1px solid #000000;
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #4e4e4e;
+	border-left: 1px solid #000000;
+	background: #272727;
+	color: #767676;
+}
+</style>
+<script type="text/javascript">
+function countSecHolywar(min, sec ,timer){
+	var $sec = $('#' + sec);
+	var second = $sec.text();
+	if(second > 0){
+		second--;
+		if(second < 10){
+			second = "0"+second;
+		}
+		$sec.text(second);
+	}else if(second =="00"){
+		var	$min = $('#' + min);
+		var	minute = $min.text();
+
+		if(minute > 0 ){
+			minute--;
+			if(minute <10){
+				minute = "0"+minute;
+			}
+			$min.text(minute);
+			$sec.text(59);
+		}else if(minute =="00"){
+			clearInterval(timer);
+		}
+	};
+};
+function countSecHolywar2(min, sec ,timer){
+	var $sec = $('.' + sec);
+	var second = $sec.text();
+	if(second > 0){
+		second--;
+		if(second < 10){
+			second = "0"+second;
+		}
+		$sec.text(second);
+	}else if(second =="00"){
+		var	$min = $('.' + min);
+		var	minute = $min.text();
+
+		if(minute > 0 ){
+			minute--;
+			if(minute <10){
+				minute = "0"+minute;
+			}
+			$min.text(minute);
+			$sec.text(59);
+		}else if(minute =="00"){
+			clearInterval(timer);
+		}
+	};
+};
+
+function countSecHolywar3(id ,timer){
+	var $sec = $('#'+id).find('.sec_smarty');
+	var second = $sec.text();
+	if(second > 0){
+		second--;
+		if(second < 10){
+			second = "0"+second;
+		}
+		$sec.text(second);
+	}else if(second =="00"){
+		var	$min = $('#'+id).find('.min_smarty');
+		var	minute = $min.text();
+
+		if(minute > 0 ){
+			minute--;
+			if(minute <10){
+				minute = "0"+minute;
+			}
+			$min.text(minute);
+			$sec.text(59);
+		}else if(minute =="00"){
+			clearInterval(timer);
+		}
+	};
+};
+
+
+
+</script>
+<script type="text/javascript" src="http://bahamut-t-i.cygames.jp/bahamut_t/js/pex-1.0.3.big5.js?version=1_0_3_5"></script>
+<script type="text/javascript">
+	window.onunload = function() {}; // ブラウザaのBack Forward Cacheの無効化
+	window.onload = function() {
+			var torf = true;
+		var container = document.getElementById("animation");
+			container.style.overflow = "hidden";
+			console.log('Pex');
+			// Android 4.0 より低い場合を含む、その他OSはPexを利用して再生
+			var pex = new Pex("http://bahamut-t-i.cygames.jp/bahamut_t/flash_sp/28_vs.swf", container, config_pex);
+		};
+	var config_pex = {
+			width  : 320,
+			height : 360,
+			disableTouch : true,
+	};
+
+	var config_exg = {
+			displayScale : 320/360,
+			disableTouch : true,
+	};
+
+	function chkAndroidVer(chkver) {
+		var usag = navigator.userAgent.toLowerCase();
+		var ver = usag.substr(usag.indexOf('android')+8, 3);
+		if(usag.indexOf("android")) if(parseFloat(ver) < chkver) return true;
+		return false;
+		}
+
+	function getFlashPlayerVersion() {
+		 var vsn = '';
+		 if( navigator.plugins["Shockwave Flash"] && navigator.mimeTypes.length ) {     // not IE
+			var tmp = navigator.plugins["Shockwave Flash"].description.match(/([0-9]+)/);
+			vsn = tmp[0];
+		 } else {    // IE
+			try{
+				var tmp = new ActiveXObject("ShockwaveFlash.ShockwaveFlash").GetVariable("$version").match(/([0-9]+)/);
+				vsn = tmp[0];
+			}catch(e){}
+		 }
+		 return vsn;
+	}
+</script>
+<div class="title_bar1 red">
+	攻擊對手
+</div>
+<div style="background-color:#111121;">
+	<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+	<table width="100%" style="width:100%;">
+		<tr>
+			<td valign="middle" width="70px" style="width:70px;">
+				<img src="http://img1-a.mobage.tw/icons/face_1_128.jpg" width="60px" />
+			</td>
+			<td valign="middle" width="75px" style="width:75px;">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/s/9d018e91c6de276d0316b28860587336.jpg" width="65px" /><br />
+			</td>
+			<td valign="middle" width="100%" style="width:100%;" align="left" >
+				悠閑的薛晃代<br />
+				<span style="color:#FFBF00;">攻戰力:</span>198 ⇒ <span style="color:#FF0000;">38</span><br />
+			</td>
+		</tr>
+	</table>
+	<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+	<form name="select_form" action="http://bahamut-t-i.cygames.jp/bahamut_t/holywar/battle_vs_other_confirm" method="post">
+		<select name="deck_id" style="font-color:#000000;">
+<option value="-1">推薦攻擊牌組</option>
+<option value="464655" selected>vs神族攻擊牌組</option>
+<option value="462488">vs人族攻擊牌組</option>
+</select>
+
+		<input type="hidden" name="other_id" value="112571908" />
+			<input class="holywar_button gray bt_he" type="submit" value="選擇">
+	</form>
+	<br />
+		<a class="textArea right" href="http://bahamut-t-i.cygames.jp/bahamut_t/deck/index/112571908/?from_v_id=2">編輯牌組<img class="textImgGold right" /></a><br />
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m.jpg" width="100%" /><br />
+	<div class="area_name" style="background-color:#000031;">
+		vs神族攻擊牌組
+	</div>
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m.jpg" width="100%" /><br />
+	<div style="text-align:left;">
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+		<span style="color:#FFBF00;">使用攻戰力:</span>160<br />
+		<span style="color:#FFBF00;">攻擊力:</span>121784 <br />
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+	</div>
+	<table width="100%" style="width:100%; margin:0; padding:0;" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+							<td width="20%" style="width:20%; margin:0;" align="center">
+											<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/lm/cee71f9a1c7e359df9fe9606cb4a373e.jpg" width="64px" />
+									</td>
+							<td width="20%" style="width:20%; margin:0;" align="center">
+											<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/lm/9d018e91c6de276d0316b28860587336.jpg" width="64px" />
+									</td>
+							<td width="20%" style="width:20%; margin:0;" align="center">
+											<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/lm/16ccafe743c1a5d93a4eaf6d4d6355c3.jpg" width="64px" />
+									</td>
+							<td width="20%" style="width:20%; margin:0;" align="center">
+											<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/lm/72563833b8954ff54f2963e70add9cac.jpg" width="64px" />
+									</td>
+							<td width="20%" style="width:20%; margin:0;" align="center">
+											<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/lm/97b867f47fb3feb4fd219932c1f154d7.jpg" width="64px" />
+									</td>
+					</tr>
+	</table>
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m.jpg" width="100%" /><br />
+</div>
+<div  id="animation"></div>
+<div style="background-color:#211111;">
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m.jpg" width="100%" /><br />
+	<table width="100%" style="width:100%; margin:0; padding:0;" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td width="20%" style="width:20%; margin:0;" align="center">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_battle_card_s.jpg?v=3" width="64" style="margin:0; padding:0;" />
+			</td>
+			<td width="20%" style="width:20%; margin:0;" align="center">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_battle_card_s.jpg" width="64" style="margin:0; padding:0;" />
+			</td>
+			<td width="20%" style="width:20%; margin:0;" align="center">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_battle_card_s.jpg" width="64" style="margin:0; padding:0;" />
+			</td>
+			<td width="20%" style="width:20%; margin:0;" align="center">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_battle_card_s.jpg" width="64" style="margin:0; padding:0;" />
+			</td>
+			<td width="20%" style="width:20%; margin:0;" align="center">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_battle_card_s.jpg" width="64" style="margin:0; padding:0;" />
+			</td>
+		</tr>
+	</table>
+	<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+	<table width="100%" style="width:100%;">
+		<tr>
+			<td align="right" valign="middle" width="100%" style="width:100%; text-align:right;">
+				夏日抹茶蛋糕<br />
+				<span style="color:#FFBF00;">防戰力:</span>300<br />
+				<span style="color:#FFBF00;">防禦力:</span>?????<br />
+									<span style="color:#FFBF00;">持有聖戰點數:</span>1376<br />
+							</td>
+			<td valign="middle" width="65" style="width:65px;">
+				<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/card/s/883ba036e8205d63c2bae3c7c1c9392b.jpg" width="70px" /><br />
+			</td>
+			<td valign="middle" width="70" style="width:70px;">
+				<img src="http://img1-a.mobage.tw/icons/face_2_128.jpg" width="60px" />
+			</td>
+		</tr>
+	</table>
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m.jpg" width="100%" style="margin-top: 5px;" /><br />
+</div>
+
+
+<br />
+<table width="320px">
+<tr valign="top">
+<td width=50% align="center">
+			<form action="http://bahamut-t-i.cygames.jp/bahamut_t/holywar/battle_vs_other_check" method="post">
+			<input type="hidden" name="other_id" value="112571908" />
+			<input type="hidden" name="deck_id" value="464655" />
+			<input type="image" src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/holywar/common/ui_button_battle_3.jpg" width="150px" onclick="submit();" />
+		</form>
+	</td>
+<td width=50% align="center">
+															<form method="post" action="http://bahamut-t-i.cygames.jp/bahamut_t/holywar/battle_vs_other_check">
+						<input type="hidden" name="other_id" value="112571908" />
+						<input type="hidden" name="deck_id" value="464655" />
+						<input type="hidden" name="pawder" value="1" />
+						<input type="hidden" name="pawder_id" value="18" />
+						<input type="image" src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/holywar/common/ui_button_battlepoint_3.jpg" width="150px" onclick="submit();" />
+						使用<span style="font-size:medium; color:#f00;">1</span>個神聖粉末<br />（本人用）
+					</form>
+										</td>
+</tr>
+</table>
+
+
+
+	<br />
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_pram_over.jpg" width="100%" /><br />
+		<div style="background-color:#000031;" class="area_name">
+		獲得聖戰點數預測值<br />
+		</div>
+	<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m_2.jpg" width="100%" /><br />
+	
+	<table width="320px" style="border-spacing:0;">
+		<tr style="background-color: #000031;">
+		<td>普通攻擊</td>
+		<td>
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+		<span style="color:#FF0000;">預計獲得聖戰點數:</span>308<br />
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+					<span style="color:#ffbf00;">預測SP:</span>43→<span style="color:#ffbf00;">46<br /></span>				<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+		</td>
+	</tr>
+											
+									<tr style="background-color: #360A0A;">
+		<td>
+		全力攻擊
+		</td>
+		<td>
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+		<span style="color:#FF0000;">預計獲得聖戰點數:</span><span style="font-size:medium;">1005</span><br />
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+		
+									<span style="color:#ffbf00;">預測SP:</span>43→<span style="color:#ffbf00;">53</span>
+							<br />
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+		</td>
+		</tr>
+		
+	</table>
+<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m_2.jpg" width="100%" /><br />
+
+	<br />
+<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+	<style type="text/css">	
+	.pr_item_o {
+		width: 310px;
+		border-collapse: separate;
+		border-spacing: 5px;
+	}
+</style>
+	<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+<div>
+		<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_hanyo_02.jpg" width="100%" /><br />
+		<div class="area_name">持有道具</div>		
+		<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_menu_02.jpg" width="100%" />
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />	
+		<div> </div>
+		<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />	
+		<table class="pr_item_o">
+			<tr class="_target_icon">
+				<td>					
+					<input type="hidden" name="mode" value="holywar" />
+					<input type="hidden" name="enemy_id" value="112571908" />
+					<input class="" id="h_power_half" type="image" src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/item/m/27.gif" width="60" height="60" onclick="pop_up_item(27,'神聖粉末1/2',61)"/>					
+				</td>
+				<td>			
+					<input class="popup_recovery" id="h_power_self" type="image" src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/item/m/18.gif" width="60" height="60" onclick="pop_up_item(18,'神聖粉末（本人用）',46)"/>					
+				</td>
+				<td>					
+					<input class="popup_recovery" id="h_power" type="image" src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/item/m/2.gif" width="60" height="60" onclick="pop_up_item(2,'神聖粉末',2056)"/>				
+				</td>
+			</tr>
+			<tr class="_target_name">
+				<td><div>神聖粉末1/2</div></td>
+				<td><div>神聖粉末（本人用）</div></td>
+				<td><div>神聖粉末</div></td>
+			</tr>
+			<tr class="_target_stock">
+				<td><div style="color:#FFBF00;">61個</div></td>
+				<td><div style="color:#FFBF00;">46個</div></td>
+				<td><div style="color:#FFBF00;">2056個</div></td>
+			</tr>
+		</table>
+		
+	</div>
+	<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+
+<div class="QTPopup" style='display:none'>
+	<div class="popupGrayBg"></div>
+	<div class="QTPopupCntnr">
+		<div class="gpBdrTop"></div>
+		<div class="gpBdrLeft">
+			<div class="gpBdrRight">
+				<div class="caption">
+					<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_hanyo_02.jpg" width="100%" /><br />
+					道具 - 確認使用
+					<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_menu_02.jpg" width="100%" />
+				</div>
+				<a class="closeBtn" title="Close" onclick='close_pop_up_item();'></a>
+				<div class="content">
+						<img id="itemImg" src="" width="70" height="70"/><br />
+						<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />	
+					<span style="font-weight: bold; font-size:1.2em;">
+					<span id="itemInfo">
+					</span><br />
+					<span id="itemNum" style='color:#CFC'></span> ⇒ <span id="itemNumNew" class="red"></span></span>
+					<div id="itemConfirm">
+						<form method="post" action="http://bahamut-t-i.cygames.jp/bahamut_t/item/result">
+							<input type="hidden" id="pop_item_id" name="item_id" value="0" />
+							<input type="hidden" name="mode" value="holywar" />
+							<input type="hidden" name="enemy_id" value="112571908" />
+							<input class="holywar_button blue bt_he" type="submit" value="使用">
+						</from>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="gpBdrBottom"></div>
+	</div>
+</div>
+
+<script>
+function pop_up_item(arg0,arg1,arg2) {
+	if (arg2 == 0) {
+		return;
+	}
+	$("#itemImg").attr('src',"http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/item/m/"+arg0+".gif");
+	$("#itemInfo").html(arg1);
+	$("#itemNum").html(arg2);
+	$("#itemNumNew").html(arg2 - 1);
+	$("#pop_item_id").val(arg0);
+	$(".QTPopup").css('display','');
+}
+
+function close_pop_up_item() {
+	$(".QTPopup").css('display','none');
+}
+
+</script>
+
+<br />
+
+<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_keisen_m.jpg" width="100%" style="margin-bottom: 5px;" /><br />
+<div style="text-align:left;">
+	<span style="color:#aaaaaa;">獲得聖戰點數將即時變化，因此顯示的數值僅為推測值。</span><br />
+</div>
+<img src="http://ava-a.mbga.jp/i/dot.gif" height="10" /><br />
+
+<div style="text-align:right;">
+	<a class="textArea right" href="http://bahamut-t-i.cygames.jp/bahamut_t/holywar_official/holywar_instructions?hash=Fullpower">什麼是全力攻擊？<img class="textImgGold right" /></a><br />
+</div>
+
+<a class="textArea left" href="http://bahamut-t-i.cygames.jp/bahamut_t/holywar/search_battle?deck_id=464655"><img class="textImgGold left" />與不同對手戰鬥</a><br />
+<a class="textArea left" href="http://bahamut-t-i.cygames.jp/bahamut_t/holywar/holywar_top"><img class="textImgGold left" />返回聖戰</a><br />
+<img src="http://bahamut-t-i.cygames.jp/bahamut_t/image_sp/ui/ui_line_footer.png" width="100%" style="margin-top: 10px;" /><br />
+
+
+<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+<div style="text-align:center;">
+<span style="color:#ffffff;">(C) Cygames, Inc.</span><br />
+</div>
+
+
+<img src="http://ava-a.mbga.jp/i/dot.gif" height="5" /><br />
+<div class = "bottompadding">&nbsp;</div>
+<!--閉じDIV-->
+</div>
+</div>
+<!-- 9.40 -->
+</body>
+</html>
