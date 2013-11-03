@@ -265,7 +265,7 @@
     
     if ([[data objectAtIndex:1] intValue]) {
         if (![NSThread isMainThread])
-            [self performSelectorOnMainThread:@selector(processAttackConfirm:) withObject:@[response,[data objectAtIndex:1]] waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(processAttackConfirm:) withObject:@[response,[data objectAtIndex:1]] waitUntilDone:NO];
     }
 }
 
@@ -353,10 +353,10 @@
         response = [api sendPacket:jsonQuest];
         range = [response rangeOfString:@"抱歉，發生錯誤。"];
         range1 = [response rangeOfString:@"勇者之心"];
-        
+        /*
         NSInvocationOperation *operation = [[NSInvocationOperation alloc]
                                             initWithTarget:self selector:@selector(getInformation) object:nil];
-        [operationQueue addOperation:operation];
+        [operationQueue addOperation:operation];*/
         
     } while (response==nil||(range.location == NSNotFound && range1.location == NSNotFound));
     
@@ -380,7 +380,9 @@
     }
 }
 
--(IBAction)automation:(id)sender{/*
+-(IBAction)automation:(id)sender{
+    //Test
+    /*
     NSString* response = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Test" ofType:@"text"] encoding:NSUTF8StringEncoding error:nil];
     [self processAttackConfirm:@[response,@"1"]];*/
 }
